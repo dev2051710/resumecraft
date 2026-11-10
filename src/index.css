@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-canvas font-sans text-ink antialiased;
+}
+
+input[type='month'] {
+  color-scheme: dark;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2f2f36;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+@layer components {
+  .input {
+    @apply w-full rounded-lg border border-line bg-field px-3 py-2 text-sm text-ink outline-none transition placeholder:text-zinc-600 focus:border-accent focus:ring-2 focus:ring-accent/30;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium text-muted;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-accent to-accent2 text-white shadow-lg shadow-accent/20 hover:opacity-90;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-card text-ink hover:bg-zinc-800;
+  }
+  .btn-danger {
+    @apply btn border border-red-500/30 bg-red-500/10 text-red-300 hover:bg-red-500/20;
+  }
+  .card {
+    @apply rounded-xl border border-line bg-card;
+  }
+  .icon-btn {
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-md text-muted transition hover:bg-zinc-800 hover:text-ink disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent;
+  }
+}
+
+/* Keep resume entries (and a heading + its first entry) together when exporting / printing */
+.avoid-break {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Off-screen full-size copy of the resume: used for PDF export and printing */
+#print-root {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 210mm;
+  pointer-events: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 0;
+  }
+  html,
+  body {
+    height: auto !important;
+    background: #fff !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #root {
+    display: none !important;
+  }
+  #print-root {
+    position: static !important;
+    left: auto !important;
+    width: 210mm;
+  }
+}
